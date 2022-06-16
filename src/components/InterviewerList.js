@@ -6,8 +6,9 @@ const InterviewerList = function (props) {
   const interviewer = props.interviewers.map((interviewer) => {
     return (
       <section className="interviewers">
-        <ul className="interviewers__list" key={interviewer.id}>
+        <ul className="interviewers__list">
           <InterviewerListItem
+            key={interviewer.id}
             name={interviewer.name}
             avatar={interviewer.avatar}
             selected={props.interviewer === interviewer.id}

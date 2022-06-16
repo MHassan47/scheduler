@@ -1,8 +1,10 @@
 import React from "react";
+import { useState } from "react";
 import DayList from "./DayList";
 import "components/Application.scss";
 
 export default function Application(props) {
+  const [day, setDay] = useState("Monday");
   const days = [
     {
       id: 1,
@@ -31,12 +33,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList
-            key={days.id}
-            days={days}
-            day={"Monday"}
-            setDay={(day) => console.log(day)}
-          />
+          <DayList days={days} day={day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"

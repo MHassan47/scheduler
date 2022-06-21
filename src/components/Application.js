@@ -71,10 +71,19 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: { ...interview },
     };
+
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
+
+    return axios.put(`api/appointments/${id}`, appointment).then((response) =>
+      setState({
+        ...state,
+        appointments,
+      })
+    );
+    // .catch((error) => console.log("error with put", error));
   }
 
   useEffect(() => {
@@ -93,7 +102,6 @@ export default function Application(props) {
       })
       .catch((error) => console.log(error));
   }, []);
-
   const appointmentMap = dailyAppointments.map((appointment) => {
     const dailyInterview = getInterview(state, appointment.interview);
     return (

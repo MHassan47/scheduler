@@ -14,7 +14,6 @@ const InterviewerList = function (props) {
             selected={props.value === interviewer.id}
             setInterviewer={() => {
               props.onChange(interviewer.id);
-              console.log(interviewer.id);
             }}
           />
         </ul>

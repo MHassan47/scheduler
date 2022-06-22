@@ -4,6 +4,7 @@ import { Fragment } from "react";
 import "components/Appointment/styles.scss";
 import Header from "./Header";
 import Empty from "./Empty";
+import Error from "./Error";
 import Show from "./Show";
 import useVisualMode from "hooks/useVisualMode";
 import Form from "./Form";
@@ -13,6 +14,8 @@ import Confirm from "./Confirm";
 // Mode constants
 const EMPTY = "EMPTY";
 const EDITING = "EDITING";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
@@ -35,7 +38,7 @@ const Appointment = function (props) {
     transition(SAVING);
     Promise.resolve(props.bookInterview(props.id, interview))
       .then(() => transition(SHOW))
-      .catch((error) => console.log(error));
+      .catch((error) => transition(ERROR_SAVE, true));
   }
 
   function onConfirm() {
@@ -45,7 +48,7 @@ const Appointment = function (props) {
     transition(DELETING);
     Promise.resolve(props.cancelInterview(props.id))
       .then(() => transition(EMPTY))
-      .catch((error) => console.log("Error deleting", error));
+      .catch((error) => transition(ERROR_DELETE, true));
   }
 
   function editingInterview() {
@@ -88,6 +91,18 @@ const Appointment = function (props) {
           onCancel={() => back()}
           onSave={save}
           bookInterview={props.bookInterview}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+          message="Could not save appointment"
+          onClose={() => back(SHOW)}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+          message="Could not delete appointment"
+          onClose={() => back(EMPTY)}
         />
       )}
     </article>

@@ -12,6 +12,7 @@ import Confirm from "./Confirm";
 
 // Mode constants
 const EMPTY = "EMPTY";
+const EDITING = "EDITING";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
@@ -47,12 +48,22 @@ const Appointment = function (props) {
       .catch((error) => console.log("Error deleting", error));
   }
 
+  function editingInterview() {
+    transition(EDITING);
+  }
+
   // console.log(props.interview.interviewer);
   return (
     <article className="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-      {mode === SHOW && <Show {...props.interview} onConfirm={onConfirm} />}
+      {mode === SHOW && (
+        <Show
+          {...props.interview}
+          onConfirm={onConfirm}
+          onEdit={editingInterview}
+        />
+      )}
       {mode === CREATE && (
         <Form
           interviewers={props.interviewers}
@@ -67,6 +78,17 @@ const Appointment = function (props) {
       {mode === DELETING && <Status message="Deleting" />}
       {mode === CONFIRM && (
         <Confirm onCancel={() => back()} onDelete={deleteInterview} />
+      )}
+      {mode === EDITING && (
+        <Form
+          student={props.interview.student}
+          interviewers={props.interviewers}
+          interviewer={props.interview.interviewer.id}
+          interview={props.interview}
+          onCancel={() => back()}
+          onSave={save}
+          bookInterview={props.bookInterview}
+        />
       )}
     </article>
   );

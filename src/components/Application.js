@@ -1,7 +1,4 @@
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
 import DayList from "./DayList";
 import "components/Application.scss";
 import Appointment from "./Appointment";
@@ -13,7 +10,7 @@ import {
 import useApplicationData from "hooks/useApplicationData";
 
 export default function Application(props) {
-  const { state, setDay, bookInterview, cancelInterview, updateSpots } =
+  const { state, setDay, bookInterview, cancelInterview } =
     useApplicationData();
   // Appointment and Interview logic
 
@@ -52,7 +49,10 @@ export default function Application(props) {
           alt="Lighthouse Labs"
         />
       </section>
-      <section className="schedule">{appointmentMap}</section>
+      <section className="schedule">
+        {appointmentMap}
+        <Appointment key="last" time="5pm" />
+      </section>
     </main>
   );
 }

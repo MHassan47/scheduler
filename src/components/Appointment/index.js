@@ -1,5 +1,4 @@
 import React from "react";
-import { Fragment } from "react";
 // import Appointment from "components/Appointment";
 import "components/Appointment/styles.scss";
 import Header from "./Header";
@@ -25,7 +24,6 @@ const CONFIRM = "CONFIRM";
 // conditional rendering using custom hook
 
 const Appointment = function (props) {
-  // console.log("This is the props.interviewers", props.interviewers);
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -55,7 +53,6 @@ const Appointment = function (props) {
     transition(EDITING);
   }
 
-  // console.log(props.interview.interviewer);
   return (
     <article className="appointment">
       <Header time={props.time} />

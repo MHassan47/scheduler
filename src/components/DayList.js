@@ -4,9 +4,8 @@ import DayListItem from "./DayListItem";
 const DayList = function (props) {
   const listItems = props.days.map((day) => {
     return (
-      <ul>
+      <ul key={day.id}>
         <DayListItem
-          key={day.id}
           name={day.name}
           spots={day.spots}
           selected={day.name === props.value}

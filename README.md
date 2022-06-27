@@ -10,6 +10,10 @@ Install dependencies with `npm install`.
 npm start
 ```
 
+## Fork and clone the scheduler-api
+
+[Scheduler-Api](https://github.com/MHassan47/scheduler-api)
+
 ## Running Jest Test Framework
 
 ```sh

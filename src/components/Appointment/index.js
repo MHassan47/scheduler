@@ -28,22 +28,25 @@ const Appointment = function (props) {
     props.interview ? SHOW : EMPTY
   );
 
+  // Saving a new interview
   function save(name, interviewer) {
+    transition(SAVING);
     const interview = {
       student: name,
       interviewer,
     };
-    transition(SAVING);
     Promise.resolve(props.bookInterview(props.id, interview))
       .then(() => transition(SHOW))
-      .catch((error) => transition(ERROR_SAVE, true));
+      .catch((error) => transition(ERROR_SAVE));
   }
 
   function onConfirm() {
     transition(CONFIRM);
   }
+
+  // Deleting an interview
   function deleteInterview() {
-    transition(DELETING);
+    transition(DELETING, true);
     Promise.resolve(props.cancelInterview(props.id))
       .then(() => transition(EMPTY))
       .catch((error) => transition(ERROR_DELETE, true));
@@ -68,7 +71,7 @@ const Appointment = function (props) {
         <Form
           interviewers={props.interviewers}
           interview={props.interview}
-          onCancel={() => back()}
+          onCancel={back}
           onSave={save}
           bookInterview={props.bookInterview}
           cancelInterview={props.cancelInterview}
@@ -91,16 +94,10 @@ const Appointment = function (props) {
         />
       )}
       {mode === ERROR_SAVE && (
-        <Error
-          message="Could not save appointment"
-          onClose={() => back(SHOW)}
-        />
+        <Error message="Could not save appointment" onClose={back} />
       )}
       {mode === ERROR_DELETE && (
-        <Error
-          message="Could not delete appointment"
-          onClose={() => back(EMPTY)}
-        />
+        <Error message="Could not delete appointment" onClose={back} />
       )}
     </article>
   );
